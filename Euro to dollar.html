@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sex</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+      color:white;
+    }
+    .container {
+      max-width: 450px;
+      margin: auto;
+      padding:20px 30px;
+      border: 1px solid #FFF;
+      border-radius: 10px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+      text-align:center;
+      background:url('sex.jpg') no-repeat center center;
+      text-shadow: 1px 1px black;
+    }
+    input{
+      margin:10px 0;
+      padding: 10px;
+      width: 70%;
+      border:solid 1px gray;
+      border-radius:6px;
+    }
+    input:focus{
+      border:solid 1px dodgerblue;
+      outline:none;
+    }
+    /* don't u fucking dare stealing my script u stupid vigga (by Mazen)*/
+  </style>
+</head>
+<body>
+ 
+  <div class="container">
+    <h2>EGP to EUR</h2>
+    <input type="number" id="egp" placeholder="Enter EGP amount" oninput="convertToEUR()">
+    <p>EUR: <span id="eurResult">0</span></p>
+    <h2>EUR to EGP</h2>
+    <input type="number" id="eur" placeholder="Enter EUR amount" oninput="convertToEGP()">
+    <p>EGP: <span id="egpResult">0</span></p>
+   
+  </div>
+  <script>
+    let exchangeRate = 0;
+    const apikey = "cc36b5ace4b9d9f710e5d19e";
+    const url = `https://v6.exchangerate-api.com/v6/${apikey}/latest/EGP`;
+    // DUDE NOT THE API
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        exchangeRate = data.conversion_rates.EUR;
+      })
+      .catch(error => console.error('Error:', error));
+    
+    function convertToEUR() {
+      let egpValue = document.getElementById("egp").value;
+      document.getElementById("eurResult").innerText = (egpValue * exchangeRate).toFixed(2);
+    }
+    
+    function convertToEGP() {
+      let eurValue = document.getElementById("eur").value;
+      document.getElementById("egpResult").innerText = (eurValue / exchangeRate).toFixed(2);
+    }
+  </script>
+</body>
+</html>
